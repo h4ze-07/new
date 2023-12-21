@@ -1,4 +1,4 @@
-import { Children, useRef, useState } from 'react'
+import { Children, useEffect, useRef, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -11,6 +11,18 @@ function App() {
   const [title, setTitle] = useState('write ur feelings today');
   const [date, setDate] = useState('')
   const [text, setText] = useState('')
+
+  const [data, setData] = useState([])
+
+  async function getEls(URL) {
+    const response = await fetch(URL)
+    const res = await response.json();
+    setData(res)
+  }
+
+  useEffect(() => {
+    getEls("https://jsonplaceholder.typicode.com/posts")
+  }, [])
 
   const inpRef = useRef(null)
 
@@ -40,6 +52,14 @@ function App() {
           <span>children</span>
         </p>
       </Button>
+      <div>
+        {data?.map(el => (
+          <div key={el.id}>
+            <h3>{el.id}</h3>
+            <p>{el.title}</p>
+          </div>
+        ))}
+      </div>
     </>
   )
 }
