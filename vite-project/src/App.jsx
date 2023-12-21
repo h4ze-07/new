@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Button from './Button'
+import { styled } from 'styled-components'
 
 const now = new Date();
 
@@ -45,9 +46,20 @@ function App() {
 
 export default App
 
+
+const DivComponent = styled.div`
+  font-size: 20px;
+  text-align: center;
+  margin: 20px 30px;
+  font-weight: 500;
+  color: pink
+`
+
 const Header = ({title, date, change}) => {
 
   const [time, setTime] = useState(new Date())
+
+  const [modal, setModalOpen] = useState(false)
 
   setInterval(() => setTime(new Date()), 1000)
 
@@ -60,7 +72,16 @@ const Header = ({title, date, change}) => {
       <div>{title}, {date}</div>
       <input type="text" onChange={event => handleChange(event)} />
       <Button />
-      <div>{time.toLocaleTimeString()}</div>
+      <DivComponent>{time.toLocaleTimeString()}</DivComponent>
+      <button onClick={() => setModalOpen(!modal)}>Click</button>
+      <div>
+        <dialog open={modal}>
+          <h3>Hello</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat expedita ipsa a, aspernatur quidem sequi tempore aperiam quae cum reiciendis?
+          </p>
+          <button onClick={() => setModalOpen(false)}>Close</button>
+        </dialog>
+      </div>
     </>
   )
 }
