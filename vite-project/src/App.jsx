@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Button from './Button'
 
-const now = new Date;
+const now = new Date();
 
 function App() {
   const [title, setTitle] = useState('write ur feelings today');
@@ -47,6 +47,9 @@ export default App
 
 const Header = ({title, date, change}) => {
 
+  const [time, setTime] = useState(new Date())
+
+  setInterval(() => setTime(new Date()), 1000)
 
   const handleChange = (e) => {
     change(e.target.value)
@@ -57,6 +60,7 @@ const Header = ({title, date, change}) => {
       <div>{title}, {date}</div>
       <input type="text" onChange={event => handleChange(event)} />
       <Button />
+      <div>{time.toLocaleTimeString()}</div>
     </>
   )
 }
